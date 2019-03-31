@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjack.oauth.server.dao.mapper.AccessTokenMapper">
+
+    <select id="getByAccessToken" parameterType="java.lang.String" resultType="com.cjack.oauth.server.dao.domain.AccessTokenDto">
+        select id, accessToken, expireTime, createTime, oauthCodeId, status
+        from oauth_access_token
+        where accessToken=#{accessToken}
+    </select>
+
+    <update id="updateAccessToken" parameterType="com.cjack.oauth.server.dao.domain.AccessTokenDto">
+        update oauth_access_token
+        set status=#{status}
+        where id=#{id}
+    </update>
+
+    <insert id="addAccessToken" parameterType="com.cjack.oauth.server.dao.domain.AccessTokenDto">
+        INSERT into oauth_access_token ( accessToken, expireTime, createTime, oauthCodeId, status)
+        VALUES ( #{accessToken}, #{expireTime}, NOW(), #{oauthCodeId}, #{status});
+    </insert>
+
+    <insert id="addOauthCode" parameterType="com.cjack.oauth.server.dao.domain.OauthCodeDto">
+        INSERT into oauth_oauthCode( oauthCode, expireTime, userId, redirectUrl, clientId, scope)
+        VALUES ( #{oauthCode}, #{expireTime}, #{userId}, #{redirectUrl}, #{clientId}, #{scope});
+    </insert>
+
+    <select id="getOauthCode" parameterType="java.lang.String" resultType="com.cjack.oauth.server.dao.domain.OauthCodeDto">
+        SELECT id, oauthCode, expireTime, userId, redirectUrl, clientId, scope
+        FROM oauth_oauthCode
+        WHERE oauthCode=#{oauthCode}
+    </select>
+
+    <select id="getOauthCodeById" parameterType="java.lang.Long" resultType="com.cjack.oauth.server.dao.domain.OauthCodeDto">
+        SELECT id, oauthCode, expireTime, userId, redirectUrl, clientId, scope
+        FROM oauth_oauthCode
+        WHERE id=#{id}
+    </select>
+</mapper>

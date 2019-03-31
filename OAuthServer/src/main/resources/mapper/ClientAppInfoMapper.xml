@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjack.oauth.server.dao.mapper.ClientAppInfoMapper">
+
+    <select id="getByClientId" parameterType="java.lang.String" resultType="com.cjack.oauth.server.dao.domain.ClientAppInfoDto">
+          SELECT id, name, trustIp, clientId, createTime
+          FROM oauth_clientAppInfo
+          where clientId=#{clientId}
+    </select>
+</mapper>
